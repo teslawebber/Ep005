@@ -1,0 +1,5 @@
+C:/Users/Xayzan/github/cmake-test/Ep005/build/CMakeFiles/operations.dir
+C:/Users/Xayzan/github/cmake-test/Ep005/build/CMakeFiles/logger.dir
+C:/Users/Xayzan/github/cmake-test/Ep005/build/CMakeFiles/HelloAppBinary.dir
+C:/Users/Xayzan/github/cmake-test/Ep005/build/CMakeFiles/edit_cache.dir
+C:/Users/Xayzan/github/cmake-test/Ep005/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,94 @@
+CMake for C++ cross platform
+By: LearnQTGuide
+
+CMake is not a build system but a build system generator
+CMakeLists.txt file contains the commands
+CMakeLists.txt file contents
+When not specified it will take the system default compiler ie on Windows->Visual Studio
+Two steps: Configuration then Generation
+In source build means build files generated in the same location that your source files are
+Separate source code and build files from each other
+To build the binary on Windows use the .sln file to open in Visual Studio and build
+To build on linux cd build -> make
+Comments in CMake start with #
+Always have cmake_minimum_required(VERSION some_number) at the start of file
+Generator is a way to tell CMake which build system it's going to generate a project for
+cmake --build . from the builds directory builds the binary without having to specify which build system you are using for ex: if you use Visual Studio generator, you have to use msbuild to build the project or MinGW Makefiles for make and Ninja makefile for ninja instead you can just cmake --build . from the build directory
+cmake --build . --target clean : removes the binary and cleans up after it
+cmake --build . --target help : doesnot work for Visual Studio build system but works for make and ninja build systems this is because the underlying system ie make and ninja support the help command but Visual Studio doesnot
+Globbing is a feature of cmake where in you can specify a glob such *.cpp and any files that meet this criteria have to be included
+Globbing is not recommended https://stackoverflow.com/a/1060061
+*Selecting Compilers*
+passing the --system-information dumps info about the system, and provides the info about the default compiler it will select
+if you don't provide a file for the output to dump into it will show all the info in the terminal
+-D CMAKE_CXX_COMPILER=compiler_name to specify the compiler to use
+This option doesnot work with Visual Studio generator and clang compiler installed not using the Visual Studio Installer (To install it Open Visual Studio Installer->Modify->Individual Components->Search for "clang"->Choose and install) *To use a compiler the generator must support it*
+Executable is not the only target type available other commonly used is library
+You can setup static or dynamic libraries https://internalpointers.com/post/journey-across-static-dynamic-libraries learn more about it here
+This makes the compilation a 2 step process first building the dependency and then using it to build the binary that is why there is 1 add_library() and add_executable()
+This is not the only way people do things. They may also setup a completly different directory for libraries called self contained libraries
+
+cmake_minimum_required(VERSION 3.5)
+
+project(HelloApp
+		VERSION 0.0.1
+		DESCRIPTION "The leading Hello World App"
+		LANGUAGES CXX)
+		
+# file(GLOB_RECURSE SRC_FILES src/*.cpp)
+# add_executable(HelloBinary main.cpp $(SRC_FILES))
+	
+# List your sources
+# Explicitly telling src files
+add_executable(HelloAppBinary main.cpp
+				src/dog.cpp
+				src/operations.cpp)
+
+target_compile_features(HelloAppBinary PRIVATE cxx_std_20)
+target_include_directories(HelloAppBinary PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+cmake -S <path-to-CMakeLists.txt> -B <path-to-build-folder> -G "Generator for makefile"
+
+Unix Makefile
+cmake -G "MinGW Makefiles" ../src -> this way can be used in from cd into the build directory
+on windows when using MinGW makefiles use mingw32-make to make the binary
+
+Ninja build system
+cmake -G "Ninja" ../src -> from the build folder
+ninja -> makes the binary
+
+Running CMake, Manipulating targets
+
+- Project generation : cmake ../path/to/source
+
+- Building : Visual Studio (msbuild)
+			 XCode on Mac
+			 Ninja
+			 MinGW Makefiles
+			 Unix Makefiles
+
+- cmake --build path/to/build/system/project --target HelloAppBinary
+											 --target clean [Delete generating binary]
+
+cmake --system-information info.txt
+
+cmake -GNinja -D CMAKE_CXX_COMPILER=g++ ./src
+
+cmake -G"Generator" -D CMAKE_CXX_COMPILER=compiler_name path/to/src
+
+add_library(operations STATIC src/operations.cpp) -> specifies a static library to be formed of name operations with it's src
+
+target_include_directories(operations PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include) -> tells cmake where to find the headers to make this library
+
+target_compile_features(operations PUBLIC cxx_std_20) -> telling the compiler what features to use when compiling the library
+
+# Target->what we want to get out of the project
+add_executable(HelloAppBinary main.cpp 
+								src/dog.cpp
+								src/log.cpp) -> removed src/operations.cpp since we are making it into a library 
+
+target_include_directories(HelloAppBinary PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+target_compile_features(HelloAppBinary PRIVATE cxx_std_20)
+
+target_link_libraries()(HelloAppBinary PUBLIC operations) tells to load the library into the executable telling the HelloAppBinary to publicly depend on the operations library

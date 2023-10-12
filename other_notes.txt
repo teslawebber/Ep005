@@ -1,0 +1,69 @@
+==============================
+Cakez Celeste Clone C++ things
+==============================
+
+BUILD SYSTEM
+
+1.  Install git for the sh command to work
+	Add the C:\Program Files\Git\bin to path
+	Doing so allows to do this sh build.sh
+	build.sh
+	clang++ main.cpp -o output.exe
+	
+2.  Install LLVM as compiler for the cpp/c code
+	You will also need to install either MinGW or Visual Studio with the C++ desktop and game option selected as LLVM doesnot install the standard libraries
+
+3.  The tasks.json file for building in vscode
+	{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "sh build.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
+
+============================================
+CMake tutorial from Code, Tech and Tutorials
+============================================
+
+1.  makefile 
+	default:
+		g++ main.cpp -o out
+	
+	makefiles do not take space and only tabs
+
+2.  cmake
+	the file name has to be the same as CMakeLists.txt
+	need to tell cmake the path to source
+	the general practice is to put the executables in build/ or out/build
+	
+3.  To build with cmake
+	cmake -S <path-to-CMakeLists.txt> -B <path-to-build-folder>
+	-S takes the source -B provides the path to the build
+	
+================================
+CMake Tutorial from LearnQtGuide
+================================
+
+1.  Prerequisites:
+	- CMake
+	- CMake extension vscode
+	- Compiler MSVC, GCC, CLANG
+
+2.  In the command pallete CMake: Quick Start
+	will create a CMakeLists.txt, main.cpp and build folder
+	
+3.  Remove the auto generated build folder to specify the compiler of your choice
+	To choose the compiler of your choice in the command pallete CMake: Select a kit and choose the compiler you want to use.
+	Then choose CMake: configure. Will create a build folder with the kit you selected
+	
+4.  To build Command Pallete->CMake: Build and will create the project according to the options you selected in step 2. Can also use the build button in the bottom ie Status Bar.
+
+5.  Command Pallete->CMake: Select Variant to choose the type of mode to build debug/release etc. And just build like before in step 4

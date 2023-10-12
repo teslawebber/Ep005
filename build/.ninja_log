@@ -1,0 +1,8 @@
+# ninja log v5
+7	2157	7188214359425658	CMakeFiles/logger.dir/logger/src/log.cpp.obj	8f628239c322b320
+2167	2274	7188214360597997	logger.lib	a6ab157be4229ad1
+52	149	7188214558471806	CMakeFiles/operations.dir/src/operations.cpp.obj	651fad3fdfbc5d66
+151	308	7188214559821086	operations.lib	25dbb42847152378
+50	2220	7188214963682642	CMakeFiles/HelloAppBinary.dir/main.cpp.obj	79f3c1e691da4b8
+61	2247	7188214963966914	CMakeFiles/HelloAppBinary.dir/src/dog.cpp.obj	a6daba71ff124acc
+2248	2421	7188214965552096	HelloAppBinary.exe	cfd5e7612b28ce4f
